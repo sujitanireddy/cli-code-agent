@@ -34,14 +34,33 @@ def get_files_info(working_directory, directory="."):
 #tells the LLM how to use the above function
 schema_get_files_info = types.FunctionDeclaration(
     name="get_files_info",
-    description="Lists files in the specified directory along with their sizes, constrained to the working directory.",
+    description=(
+        "Lists files and subdirectories within a directory constrained to a "
+        "given working_directory. Ensures the target path is inside the "
+        "working_directory and is a directory before listing. Returns a "
+        "newline-separated summary where each line includes the item name, "
+        "file size in bytes, and whether it is a directory, or an error "
+        "message if validation or listing fails."
+    ),
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
+            "working_directory": types.Schema(
+                type=types.Type.STRING,
+                description=(
+                    "Base directory that defines the allowed sandbox. The "
+                    "target directory must reside within this path."
+                ),
+            ),
             "directory": types.Schema(
                 type=types.Type.STRING,
-                description="The directory to list files from, relative to the working directory. If not provided, lists files in the working directory itself.",
+                description=(
+                    "Directory to list, relative to working_directory or an "
+                    "absolute path that still lies under it. Defaults to '.' "
+                    "for the working_directory itself."
+                ),
             ),
         },
+        required=["working_directory"],
     ),
 )

@@ -1,5 +1,6 @@
 import os
 import subprocess
+from google.genai import types
 
 def run_python_file(working_directory, file_path, args=[]):
     
@@ -41,3 +42,49 @@ def run_python_file(working_directory, file_path, args=[]):
 
     except Exception as e:
         return f"Error: executing Python file: {e}" 
+
+
+#tells the LLM how to use the above function
+schema_run_python_file = types.FunctionDeclaration(
+    name="run_python_file",
+    description=(
+        "Safely executes a Python file within a restricted working directory. "
+        "Verifies that the target file is inside the given working_directory, "
+        "exists, and has a .py extension, then runs it with optional "
+        "command-line arguments using python3. Returns a combined string "
+        "containing STDOUT and STDERR, or a clear error message if execution "
+        "fails, the file is invalid, or no output is produced."
+    ),
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "working_directory": types.Schema(
+                type=types.Type.STRING,
+                description=(
+                    "Absolute or relative path to the directory that defines "
+                    "the allowed execution sandbox. The script must reside "
+                    "within this directory."
+                ),
+            ),
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description=(
+                    "Path to the Python file to execute, relative to the "
+                    "working_directory (or an absolute path that still lies "
+                    "inside it)."
+                ),
+            ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                description=(
+                    "Optional list of command-line argument strings to pass "
+                    "to the Python script."
+                ),
+                items=types.Schema(
+                    type=types.Type.STRING,
+                ),
+            ),
+        },
+        required=["working_directory", "file_path"],
+    ),
+)

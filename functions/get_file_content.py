@@ -1,5 +1,6 @@
 import os
 from config import MAX_CHARS
+from google.genai import types
 
 def get_file_content(working_directory, file_path):
     
@@ -29,3 +30,37 @@ def get_file_content(working_directory, file_path):
 
     else:
         return f'Error: Cannot read "{file_path}" as it is outside the permitted working directory'
+    
+
+#tells the LLM how to use the above function
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_file_content",
+    description=(
+        "Reads the contents of a file within a restricted working directory. "
+        "Ensures the target path is inside the given working_directory and is "
+        "a regular file before reading. If the file exceeds MAX_CHARS, the "
+        "content is truncated and a truncation note is appended. Returns the "
+        "file contents as a string or an error message if validation or reading "
+        "fails."
+    ),
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "working_directory": types.Schema(
+                type=types.Type.STRING,
+                description=(
+                    "Base directory that defines the allowed sandbox. The "
+                    "target file must reside within this directory."
+                ),
+            ),
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description=(
+                    "Path to the file to read, relative to working_directory "
+                    "or an absolute path still under it."
+                ),
+            ),
+        },
+        required=["working_directory", "file_path"],
+    ),
+)

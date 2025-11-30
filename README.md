@@ -19,7 +19,7 @@ All while staying inside a **defined working directory**.
 
 ## Tech Stack Used: 
 
-- LLM: **Google Gemini** (`gemini-2.0-flash-001`)
+- LLM: [**Google Gemini**](https://ai.google.dev/gemini-api/docs) (`gemini-2.0-flash-001`)
 - Tool calling support (Pre-defined python funtions):
   - List files and folders
   - Read file contents

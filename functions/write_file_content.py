@@ -23,7 +23,7 @@ def write_file(working_directory, file_path, content):
     except Exception as e:
         return f"Error: writing to file: {e}"
 
-
+#Tells the LLM how to use the above function
 schema_write_file = types.FunctionDeclaration(
     name="write_file",
     description="Writes content to a file within the working directory. Creates the file if it doesn't exist.",

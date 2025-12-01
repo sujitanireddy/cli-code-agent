@@ -23,7 +23,7 @@ def get_files_info(working_directory, directory="."):
     except Exception as e:
         return f"Error listing files: {e}"
 
-
+#Tells the LLM how to use the above function
 schema_get_files_info = types.FunctionDeclaration(
     name="get_files_info",
     description="Lists files in the specified directory along with their sizes, constrained to the working directory.",

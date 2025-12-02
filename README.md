@@ -27,11 +27,10 @@ All operations stay within a **defined working directory** for safety.
   - Writing/overwriting files
 - **Safety First**: All operations confined to a configured `WORKING_DIR`
 - **Iterative Agent Loop**: Configurable `MAX_ITERS` for complex tasks
-- **Example Project**: Includes a CLI calculator app for testing and debugging
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ![Architecture Flowchart](flowchart.png)
 
@@ -79,23 +78,10 @@ All operations stay within a **defined working directory** for safety.
    
    Open `config.py` and update `WORKING_DIR` to point to your target project:
 ```python
-   WORKING_DIR = "./your-project-folder"
+   WORKING_DIR = "relative-path-to-your-project-folder"
 ```
 
-4. **Create virtual environment**
-```bash
-   # Create .venv managed by uv
-   uv venv .venv
-   
-   # Activate it
-   # macOS / Linux:
-   source .venv/bin/activate
-   
-   # Windows (PowerShell):
-   .\.venv\Scripts\Activate
-```
-
-5. **Install dependencies**
+4. **Install dependencies and create virtual env using uv**
 ```bash
    uv sync
 ```

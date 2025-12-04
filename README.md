@@ -15,6 +15,8 @@ Give it a natural-language task like:
 
 All operations stay within a **defined working directory** for safety.
 
+Check out the full demo [here](https://www.youtube.com/watch?v=aRW7wZKC4_I)
+
 ---
 
 ## Features
